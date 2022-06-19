@@ -1,0 +1,27 @@
+{
+  "name": "example-js-webrtc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "immer": "^9.0.15",
+    "ioredis": "^5.0.6",
+    "next": "12.1.6",
+    "nookies": "^2.5.2",
+    "pino": "^8.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "use-immer": "^0.7.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "8.17.0",
+    "eslint-config-next": "12.1.6"
+  }
+}
