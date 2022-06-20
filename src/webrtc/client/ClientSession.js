@@ -122,8 +122,8 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
-    this.#connection.connectionstatechange = e => {
-      console.log(`connectionstate: ${this.#connection.connectionState}`)
+    this.#connection.signalingstatechange = e => {
+      console.log(`signalingstatechange: ${this.#connection.signalingState}`)
     }
 
     const localDescription = await this.#connection.createOffer()
@@ -146,8 +146,8 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
-    this.#connection.connectionstatechange = e => {
-      console.log(`connectionstate: ${this.#connection.connectionState}`)
+    this.#connection.signalingstatechange = e => {
+      console.log(`signalingstatechange: ${this.#connection.signalingState}`)
     }
 
     this.#connection.ondatachannel = e => {
