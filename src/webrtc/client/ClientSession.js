@@ -122,6 +122,9 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
+    this.#connection.negotiationneeded = e => {
+      console.log("negotiationneeded")
+    }
 
     const localDescription = await this.#connection.createOffer()
     await this.#sendLocalDescription(localDescription)
@@ -143,6 +146,10 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
+    this.#connection.negotiationneeded = e => {
+      console.log("negotiationneeded")
+    }
+
     this.#connection.ondatachannel = e => {
       this.#channel = e.channel
       this.#channel.onmessage = (e) => this.#handleOnmessage(e)
