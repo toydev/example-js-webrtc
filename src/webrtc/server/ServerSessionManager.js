@@ -7,7 +7,11 @@ class ServerSessionManager {
 
   #getRedis() {
     if (!this.#redis) {
-      this.#redis = new Redis()
+      if (process.env.REDIS_URL) {
+        this.#redis = new Redis(process.env.REDIS_URL)
+      } else {
+        this.#redis = new Redis()
+      }
     }
 
     return this.#redis
