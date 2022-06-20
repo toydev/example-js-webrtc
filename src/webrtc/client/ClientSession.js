@@ -122,8 +122,17 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
-    this.#connection.signalingstatechange = e => {
-      console.log(`signalingstatechange: ${this.#connection.signalingState}`)
+    this.#connection.onnegotiationneeded = e => {
+      console.log(`onnegotiationneeded`)
+    }
+    this.#connection.onconnectionstatechange = e => {
+      console.log(`onconnectionstatechange: ${this.#connection.connectionState}`)
+    }
+    this.#connection.oniceconnectionstatechange = e => {
+      console.log(`iceconnectionstatechange: ${this.#connection.iceConnectionState}`)
+    }
+    this.#connection.onsignalingstatechange = e => {
+      console.log(`iceconnectionstatechange: ${this.#connection.signalingState}`)
     }
 
     const localDescription = await this.#connection.createOffer()
@@ -146,8 +155,17 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
-    this.#connection.signalingstatechange = e => {
-      console.log(`signalingstatechange: ${this.#connection.signalingState}`)
+    this.#connection.onnegotiationneeded = e => {
+      console.log(`onnegotiationneeded`)
+    }
+    this.#connection.onconnectionstatechange = e => {
+      console.log(`onconnectionstatechange: ${this.#connection.connectionState}`)
+    }
+    this.#connection.oniceconnectionstatechange = e => {
+      console.log(`iceconnectionstatechange: ${this.#connection.iceConnectionState}`)
+    }
+    this.#connection.onsignalingstatechange = e => {
+      console.log(`iceconnectionstatechange: ${this.#connection.signalingState}`)
     }
 
     this.#connection.ondatachannel = e => {
