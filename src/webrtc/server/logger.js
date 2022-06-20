@@ -9,5 +9,5 @@ export default pino(
       },
     },
   },
-  pino.destination(`${process.cwd()}/logs/server.log`)
+  // pino.destination(`${process.cwd()}/logs/server.log`)
 )
