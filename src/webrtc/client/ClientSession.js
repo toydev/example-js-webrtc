@@ -122,8 +122,8 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
-    this.#connection.negotiationneeded = e => {
-      console.log("negotiationneeded")
+    this.#connection.connectionstatechange = e => {
+      console.log(`connectionstate: ${this.#connection.connectionState}`)
     }
 
     const localDescription = await this.#connection.createOffer()
@@ -146,8 +146,8 @@ export default class ClientSession {
         this.#sendCompleteCandidates()
       }
     }
-    this.#connection.negotiationneeded = e => {
-      console.log("negotiationneeded")
+    this.#connection.connectionstatechange = e => {
+      console.log(`connectionstate: ${this.#connection.connectionState}`)
     }
 
     this.#connection.ondatachannel = e => {
