@@ -110,30 +110,17 @@ export default class ClientSession {
         urls: "stun:stun.l.google.com:19302"
       }]
     })
+    this.#connection.onicecandidate = e => this.#handleOnicecandidate(e)
+    this.#connection.onicegatheringstatechange = e => this.#handleOnicegatheringstatechange(e)
+    this.#connection.onnegotiationneeded = e => this.#handleOnnegotiationneeded(e)
+    this.#connection.onconnectionstatechange = e => this.#handleOnconnectionstatechange(e)
+    this.#connection.oniceconnectionstatechange = e => this.#handleOniceconnectionstatechange(e)
+    this.#connection.onsignalingstatechange = e => this.#handleOnsignalingstatechange(e)
 
     this.#channel = this.#connection.createDataChannel("channel")
     this.#channel.onmessage = (e) => this.#handleOnmessage(e)
-    this.#channel.onopen = () => this.#handleOnopen()
-    this.#channel.onclose = () => this.#handleOnclose()
-
-    this.#connection.onicecandidate = e => this.#sendCandidate(e)
-    this.#connection.onicegatheringstatechange = e => {
-      if (e.target.iceGatheringState === "complete") {
-        this.#sendCompleteCandidates()
-      }
-    }
-    this.#connection.onnegotiationneeded = e => {
-      console.log(`onnegotiationneeded`)
-    }
-    this.#connection.onconnectionstatechange = e => {
-      console.log(`onconnectionstatechange: ${this.#connection.connectionState}`)
-    }
-    this.#connection.oniceconnectionstatechange = e => {
-      console.log(`iceconnectionstatechange: ${this.#connection.iceConnectionState}`)
-    }
-    this.#connection.onsignalingstatechange = e => {
-      console.log(`iceconnectionstatechange: ${this.#connection.signalingState}`)
-    }
+    this.#channel.onopen = (e) => this.#handleOnopen(e)
+    this.#channel.onclose = (e) => this.#handleOnclose(e)
 
     const localDescription = await this.#connection.createOffer()
     await this.#sendLocalDescription(localDescription)
@@ -149,30 +136,17 @@ export default class ClientSession {
       }]
     })
 
-    this.#connection.onicecandidate = e => this.#sendCandidate(e)
-    this.#connection.onicegatheringstatechange = e => {
-      if (e.target.iceGatheringState === "complete") {
-        this.#sendCompleteCandidates()
-      }
-    }
-    this.#connection.onnegotiationneeded = e => {
-      console.log(`onnegotiationneeded`)
-    }
-    this.#connection.onconnectionstatechange = e => {
-      console.log(`onconnectionstatechange: ${this.#connection.connectionState}`)
-    }
-    this.#connection.oniceconnectionstatechange = e => {
-      console.log(`iceconnectionstatechange: ${this.#connection.iceConnectionState}`)
-    }
-    this.#connection.onsignalingstatechange = e => {
-      console.log(`iceconnectionstatechange: ${this.#connection.signalingState}`)
-    }
-
+    this.#connection.onicecandidate = e => this.#handleOnicecandidate(e)
+    this.#connection.onicegatheringstatechange = e => this.#handleOnicegatheringstatechange(e)
+    this.#connection.onnegotiationneeded = e => this.#handleOnnegotiationneeded(e)
+    this.#connection.onconnectionstatechange = e => this.#handleOnconnectionstatechange(e)
+    this.#connection.oniceconnectionstatechange = e => this.#handleOniceconnectionstatechange(e)
+    this.#connection.onsignalingstatechange = e => this.#handleOnsignalingstatechange(e)
     this.#connection.ondatachannel = e => {
       this.#channel = e.channel
-      this.#channel.onmessage = (e) => this.#handleOnmessage(e)
-      this.#channel.onopen = () => this.#handleOnopen()
-      this.#channel.onclose = () => this.#handleOnclose()
+      this.#channel.onmessage = e => this.#handleOnmessage(e)
+      this.#channel.onopen = e => this.#handleOnopen(e)
+      this.#channel.onclose = e => this.#handleOnclose(e)
     }
   }
 
@@ -236,17 +210,39 @@ export default class ClientSession {
     }
   }
 
+  #handleOnicecandidate(e) {
+    this.#sendCandidate(e)
+  }
+
+  #handleOnicegatheringstatechange(e) {
+    if (e.target.iceGatheringState === "complete") {
+      this.#sendCompleteCandidates()
+    }
+  }
+
+  #handleOnnegotiationneeded(e) {
+  }
+
+  #handleOnconnectionstatechange(e) {
+  }
+
+  #handleOniceconnectionstatechange(e) {
+  }
+
+  #handleOnsignalingstatechange(e) {
+  }
+
   #handleOnmessage(e) {
     if (this.#onmessage) {
       this.#onmessage(e)
     }
   }
 
-  #handleOnopen() {
+  #handleOnopen(e) {
     this.#setConnected(true)
   }
 
-  #handleOnclose() {
+  #handleOnclose(e) {
     this.#setConnected(false)
     this.connect()
   }
