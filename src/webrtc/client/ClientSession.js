@@ -215,8 +215,10 @@ export default class ClientSession {
   }
 
   #handleOnicegatheringstatechange(e) {
-    if (e.target.iceGatheringState === "complete") {
-      this.#sendCompleteCandidates()
+    switch (e.target.iceGatheringState) {
+      case "complete":
+        this.#sendCompleteCandidates()
+        break
     }
   }
 
@@ -224,6 +226,11 @@ export default class ClientSession {
   }
 
   #handleOnconnectionstatechange(e) {
+    switch (e.target.connectionState) {
+      case "disconnected":
+        this.#setConnected(false)
+        break
+    }
   }
 
   #handleOniceconnectionstatechange(e) {
