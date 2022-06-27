@@ -206,6 +206,7 @@ export default class ClientSession {
         if (this.#onopen) this.#onopen()
       } else {
         if (this.#onclose) this.#onclose()
+        this.connect()
       }
     }
   }
@@ -251,7 +252,6 @@ export default class ClientSession {
 
   #handleOnclose(e) {
     this.#setConnected(false)
-    this.connect()
   }
 
   async #sendLocalDescription(localDescription) {
